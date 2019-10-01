@@ -208,7 +208,7 @@ class AuditlogRule(models.Model):
         self.ensure_one()
         log_type = self.log_type
 
-        @api.model
+        @api.model_create_multi
         @api.returns('self', lambda value: value.id)
         def create_full(self, vals, **kwargs):
             self = self.with_context(auditlog_disabled=True)
@@ -222,7 +222,7 @@ class AuditlogRule(models.Model):
                 'create', None, new_values, {'log_type': log_type})
             return new_record
 
-        @api.model
+        @api.model_create_multi
         @api.returns('self', lambda value: value.id)
         def create_fast(self, vals, **kwargs):
             self = self.with_context(auditlog_disabled=True)
